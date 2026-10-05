@@ -1,0 +1,60 @@
+/* Icon subset: woff2 only, glyphs used by this page. */
+
+@font-face {
+  font-family: 'boxicons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/assets/fonts/boxicons.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'bootstrap-icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/assets/fonts/bootstrap-icons.woff2) format('woff2');
+}
+
+
+.bx-cart:before { content:"\ea36" }
+.bx-code-alt:before { content:"\ea69" }
+.bx-dumbbell:before { content:"\eabd" }
+.bx-layout:before { content:"\eb31" }
+.bx-package:before { content:"\eba6" }
+.bx-plus-medical:before { content:"\ebc2" }
+.bx-right-arrow-alt:before { content:"\ebe6" }
+.bxl-facebook-circle:before { content:"\e930" }
+.bxl-google:before { content:"\e93c" }
+.bxl-linkedin:before { content:"\e94d" }
+.bxl-shopify:before { content:"\e96d" }
+.bxl-tiktok:before { content:"\e97c" }
+.bxl-wordpress:before { content:"\e98f" }
+.bxs-graduation:before { content:"\edd3" }
+.bxs-image:before { content:"\edf0" }
+.bxs-paint:before { content:"\ee5e" }
+.bxs-palette:before { content:"\ee60" }
+.bxl-facebook:before { content:"\e92f" }
+.bxl-instagram-alt:before { content:"\e943" }
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  display: inline-block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -.125em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bi-briefcase-fill::before { content: "\f1cb"; }
+.bi-caret-down-fill::before { content: "\f229"; }
+.bi-plus::before { content: "\f4fe"; }
+.bi-star-fill::before { content: "\f586"; }
+.bi-star-half::before { content: "\f587"; }
+.bi-x::before { content: "\f62a"; }
+.bx { font-family:boxicons!important;font-weight:400;font-style:normal;font-variant:normal;line-height:1;text-rendering:auto;display:inline-block;text-transform:none;speak:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale }
