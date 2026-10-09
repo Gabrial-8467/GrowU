@@ -149,72 +149,78 @@ export const menuItems: MenuItem[] = [
 ];
 
 export const certifications = [
+  '/assets/img/grow/partner/logo-5.png',
   '/assets/img/grow/partner/logo-1.png',
   '/assets/img/grow/partner/logo-2.png',
   '/assets/img/grow/partner/logo-3.png',
   '/assets/img/grow/partner/logo-4.png',
-  '/assets/img/grow/partner/logo-5.png',
 ];
 
 export const services = [
   {
-    title: ['Search Engine', 'Optimization'],
+    title: 'Search Engine Optimization',
+    icon: 'bx bx-search-alt',
     href: '#services',
     tone: '',
     points: [
-      '+ Optimizing your website to rank higher on search engines like Google.',
-      '+ Includes keyword research, on-page optimization, technical SEO, and link building.',
-      '+ Agencies focus on improving organic traffic and visibility.',
+      'Optimizing your website to rank higher on search engines like Google.',
+      'Includes keyword research, on-page optimization, technical SEO, and link building.',
+      'Agencies focus on improving organic traffic and visibility.',
     ],
   },
   {
-    title: ['Pay-Per-Click', 'Advertising'],
+    title: 'Pay-Per-Click Advertising',
+    icon: 'bx bx-target-lock',
     href: '#services',
     tone: 'two',
     points: [
-      '+ Running paid ad campaigns on platforms like Google Ads, Bing Ads, and social media.',
-      '+ Focuses on driving immediate traffic and conversions through targeted ads.',
-      '+ Agencies manage budgets, ad copy, and performance tracking.',
+      'Running paid ad campaigns on platforms like Google Ads, Bing Ads, and social media.',
+      'Focuses on driving immediate traffic and conversions through targeted ads.',
+      'Agencies manage budgets, ad copy, and performance tracking.',
     ],
   },
   {
-    title: ['Social Media', 'Marketing'],
+    title: 'Social Media Marketing',
+    icon: 'bx bx-message-rounded-dots',
     href: '#services',
     tone: '',
     points: [
-      '+ Creating and managing platforms like Facebook, Instagram, LinkedIn, and Twitter, Pinterest etc.',
-      '+ Includes content creation, community management, and paid social media ads.',
-      '+ Helps build brand awareness and engagement.',
+      'Creating and managing platforms like Facebook, Instagram, LinkedIn, Twitter, Pinterest.',
+      'Includes content creation, community management, and paid social media ads.',
+      'Helps build brand awareness and customer engagement.',
     ],
   },
   {
-    title: ['Content', 'Marketing'],
+    title: 'Content Marketing',
+    icon: 'bx bx-file-blank',
     href: '#services',
     tone: 'three',
     points: [
-      '+ Developing high-quality, relevant content such as blogs, videos, infographics, and eBooks.',
-      '+ Aims to educate, entertain, and engage your target audience.',
-      '+ Often integrated with SEO and social media strategies.',
+      'Developing high-quality, relevant content such as blogs, videos, infographics, and eBooks.',
+      'Aims to educate, entertain, and engage your target audience.',
+      'Often integrated seamlessly with SEO and social media strategies.',
     ],
   },
   {
-    title: ['Email', 'Marketing'],
+    title: 'Email Marketing',
+    icon: 'bx bx-envelope',
     href: '#services',
     tone: '',
     points: [
-      '+ Executing email campaigns to nurture leads and retain customers.',
-      '+ Includes segmentation, automation, and performance analysis.',
-      '+ Optimizing email content for audience engagement and conversion.',
+      'Executing automated email campaigns to nurture leads and retain long-term customers.',
+      'Includes segmentation, behavioral triggers, automation, and analytics.',
+      'Optimizing content for high open rates, click-throughs, and conversions.',
     ],
   },
   {
-    title: ['Conversion Rate', 'Optimization'],
+    title: 'Conversion Rate Optimization',
+    icon: 'bx bx-line-chart',
     href: '#services',
     tone: 'three',
     points: [
-      '+ Improving the percentage of website visitors who take desired actions (e.g., purchases, sign-ups).',
-      '+ Involves A/B testing, user experience (UX) improvements, and analytics.',
-      'Building user trust through credibility elements .',
+      'Improving the percentage of visitors who take desired actions (purchases, sign-ups).',
+      'Involves systematic A/B testing, user experience (UX) refinements, and heatmaps.',
+      'Building deep user trust through credible on-site proof points.',
     ],
   },
 ];
@@ -241,7 +247,7 @@ export const counters = [
   { value: 150, label: 'Happy Clients', tone: 'bg-clip', vector: '/assets/img/home4/icon/home4-counter-vector1.svg' },
   { value: 150, label: 'Projects Delivered', tone: 'two', vector: '/assets/img/home4/icon/home4-counter-vector2.svg' },
   { value: 10, label: 'Years of Expertise', tone: 'bg-clip', vector: '/assets/img/home4/icon/home4-counter-vector3.svg' },
-  { value: 30, label: 'Team Member', tone: 'two', vector: '/assets/img/home4/icon/home4-counter-vector4.svg' },
+  { value: 30, label: 'Team Members', tone: 'two', vector: '/assets/img/home4/icon/home4-counter-vector4.svg' },
 ];
 
 export const features = [
@@ -268,9 +274,27 @@ export const features = [
 ];
 
 export const processSteps = [
-  { title: ['Plan &', 'Strategize'], no: '01', align: 'left' as const, tone: '' },
-  { title: ['Create &', 'Launch'], no: '02', align: 'right' as const, tone: 'two' },
-  { title: ['Analyze &', 'Optimize'], no: '03', align: 'right' as const, tone: 'three' },
+  {
+    title: 'Plan & Strategize',
+    no: '01',
+    align: 'left' as const,
+    tone: 'step-dark',
+    desc: 'Audits, positioning, and KPI blueprinting.',
+  },
+  {
+    title: 'Create & Launch',
+    no: '02',
+    align: 'right' as const,
+    tone: 'step-white',
+    desc: 'Deploy high-converting funnels & targeted ads.',
+  },
+  {
+    title: 'Analyze & Optimize',
+    no: '03',
+    align: 'right' as const,
+    tone: 'step-blue',
+    desc: 'Iterative testing, A/B scale, and peak ROI.',
+  },
 ];
 
 export const industries = [

@@ -1,44 +1,46 @@
-import Svg from './svg';
-import { ResultArea, Reveal } from './Primitives';
+import { Reveal } from './Primitives';
 import { services } from '../data/content';
 
 export default function Services() {
   return (
-    <section className="home4-service-section mb-130" id="services">
+    <section className="ref-services-section" id="services">
       <div className="container">
-        <Reveal animation="down" className="mb-70">
-          <div className="row g-4 justify-content-between align-items-end">
-            <div className="col-xl-5 col-lg-6">
-              <div className="section-title2">
-                <h2 className="title">Smart Solutions. Guaranteed.</h2>
-              </div>
+        <Reveal animation="down">
+          <div className="ref-section-header-row">
+            <div>
+              <span className="ref-eyebrow">COMPREHENSIVE CAPABILITIES</span>
+              <h2 className="ref-heading">Smart Solutions. Guaranteed.</h2>
             </div>
-            <div className="col-lg-3 d-flex justify-content-lg-end">
-              <ResultArea />
+            <div>
+              <span className="ref-pill-badge">
+                <span className="badge-dot" />
+                100% Measurable Results &amp; ROI
+              </span>
             </div>
           </div>
         </Reveal>
 
-        <div className="row gy-md-5 gy-4">
+        <div className="row g-4">
           {services.map((service, index) => (
-            <div className="col-lg-4 col-md-6" key={service.title.join('-')}>
-              <Reveal animation="down" delay={(index % 3) * 200}>
-                <div className={`service-card3 ${service.tone}`}>
-                  <h4>
-                    <a href={service.href}>
-                      {service.title[0]} <br />
-                      {service.title[1]}
-                    </a>
-                  </h4>
-                  <ul>
+            <div className="col-lg-4 col-md-6" key={service.title}>
+              <Reveal animation="up" delay={(index % 3) * 150} className="h-100">
+                <div className="ref-service-grid-card">
+                  <div className="ref-service-icon-box">
+                    <i className={service.icon || 'bx bx-check-shield'} />
+                  </div>
+
+                  <h3 className="ref-service-card-title">{service.title}</h3>
+
+                  <ul className="ref-service-bullet-list">
                     {service.points.map((point, i) => (
-                      <li key={i}>{point}</li>
+                      <li key={i}>{point.replace(/^\+\s*/, '')}</li>
                     ))}
                   </ul>
-                  <a href={service.href} id="btn">
-                    View Details <span />
+
+                  <a href={service.href} className="ref-service-btn">
+                    <span>View Details</span>
+                    <i className="bx bx-right-arrow-alt" style={{ fontSize: '18px' }} />
                   </a>
-                  <Svg name="serviceShape" className="shape" width={68} height={250} />
                 </div>
               </Reveal>
             </div>

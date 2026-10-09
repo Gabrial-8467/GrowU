@@ -1,361 +1,423 @@
 import { useEffect, useState } from 'react';
-import Svg from './svg';
-import { Button1, Button4 } from './Primitives';
-import { menuItems, type MenuGroup, type MenuItem } from '../data/content';
 import { useScrolled, useScrollLock } from '../hooks';
 
 const LOGO = '/assets/img/logo/layer-0.png';
 const PHONE = '+61 466 522 307';
 const PHONE_HREF = 'tel:+61466522307';
+const EMAIL = 'info@growudigital.com';
+const EMAIL_HREF = 'mailto:info@growudigital.com';
+
+const SOLUTIONS = [
+  {
+    title: 'Search Engine Optimization',
+    desc: 'Rank higher on Google organically',
+    icon: 'bx bx-search-alt',
+    href: '#services',
+  },
+  {
+    title: 'Pay-Per-Click Advertising',
+    desc: 'Targeted ROI-driven paid ads',
+    icon: 'bx bx-target-lock',
+    href: '#services',
+  },
+  {
+    title: 'Social Media Marketing',
+    desc: 'Grow brand reach and engagement',
+    icon: 'bx bx-message-rounded-dots',
+    href: '#services',
+  },
+  {
+    title: 'Content Marketing',
+    desc: 'Strategic copy, blogs & assets',
+    icon: 'bx bx-file-blank',
+    href: '#services',
+  },
+  {
+    title: 'Email Marketing',
+    desc: 'Automated high-converting funnels',
+    icon: 'bx bx-envelope',
+    href: '#services',
+  },
+  {
+    title: 'Conversion Rate Optimization',
+    desc: 'Turn more clicks into customers',
+    icon: 'bx bx-line-chart',
+    href: '#services',
+  },
+];
+
+const INDUSTRIES_LIST = [
+  { label: 'Information Technology', href: '#industry', icon: 'bx bx-code-alt' },
+  { label: 'Education', href: '#industry', icon: 'bx bxs-graduation' },
+  { label: 'Fitness', href: '#industry', icon: 'bx bx-dumbbell' },
+  { label: 'Health Care', href: '#industry', icon: 'bx bx-plus-medical' },
+  { label: 'Logistics', href: '#industry', icon: 'bx bx-package' },
+  { label: 'Real Estate', href: '#industry', icon: 'bx bx-building-house' },
+];
+
+const ABOUT_LINKS = [
+  { label: 'Company Profile', href: '#about', icon: 'bx bx-buildings' },
+  { label: 'Why GrowU', href: '#why', icon: 'bx bx-check-shield' },
+  { label: 'Our Proven Process', href: '#process', icon: 'bx bx-git-repo-forked' },
+  { label: 'Client Feedback', href: '#testimonial', icon: 'bx bx-star' },
+];
 
 export default function Navbar({ onContact }: { onContact?: () => void }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [mobileExpanded, setMobileExpanded] = useState<number | null>(null);
-  const scrolled = useScrolled(30);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const scrolled = useScrolled(20);
 
   useScrollLock(drawerOpen);
 
   useEffect(() => {
-    const close = () => setOpenIndex(null);
-    window.addEventListener('resize', close);
-    return () => window.removeEventListener('resize', close);
+    const handleResize = () => {
+      setActiveDropdown(null);
+      if (window.innerWidth >= 992) {
+        setDrawerOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggle = (index: number) => setOpenIndex((prev) => (prev === index ? null : index));
+  const toggleDropdown = (key: string) => {
+    setActiveDropdown((prev) => (prev === key ? null : key));
+  };
 
-  const openContact = (event: React.MouseEvent) => {
-    event.preventDefault();
+  const closeDropdowns = () => setActiveDropdown(null);
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setDrawerOpen(false);
     onContact?.();
   };
 
   return (
     <>
-      <header className={`header-area style-4${scrolled ? ' sticky' : ''}`}>
-        <div className="container-fluid d-flex flex-nowrap align-items-center justify-content-evenly">
-          <div className="company-logo">
-            <a className="logo-dark" href="#home" aria-label="Growu Digital home">
-              <img className="img-fluid" src={LOGO} alt="image" width={220} height={48} />
+      <header className={`modern-navbar-wrapper${scrolled ? ' scrolled' : ''}`}>
+        <div className="container">
+          <div className="modern-navbar-inner">
+            {/* Brand Logo */}
+            <a href="#home" className="modern-navbar-brand" aria-label="GrowU Digital Home">
+              <img src={LOGO} alt="GrowU Digital Australia" width={180} height={40} />
             </a>
-            <a className="logo-light" href="#home" aria-hidden="true" tabIndex={-1}>
-              <img className="img-fluid" src={LOGO} alt="" width={220} height={48} />
-            </a>
-          </div>
 
-          <div className="menu-wrap">
-            <div className="main-menu">
-              <div className="mobile-logo-area d-lg-none d-flex align-items-center justify-content-evenly">
-                <a className="mobile-logo-wrap" href="#home">
-                  <img className="img-fluid light" src={LOGO} alt="image" width={220} height={48} />
-                  <img className="img-fluid dark" src={LOGO} alt="" width={220} height={48} />
-                </a>
-                <button type="button" className="menu-close-btn" onClick={() => setDrawerOpen(false)} aria-label="Close menu">
-                  <i className="bi bi-x" />
-                </button>
-              </div>
+            {/* Desktop Navigation */}
+            <nav aria-label="Primary Navigation">
+              <ul className="modern-navbar-nav">
+                <li className="modern-nav-item">
+                  <a href="#home" className="modern-nav-link active">
+                    Home
+                  </a>
+                </li>
 
-              <ul className="menu-list">
-                {menuItems.map((item, index) => (
-                  <li
-                    key={item.label}
-                    className={`${item.active ? 'active' : ''}${item.groups || item.mega ? ' menu-item-has-children' : ''}${item.mega ? ' position-inherit' : ''}`}
-                    onMouseEnter={() => (item.groups || item.mega) && setOpenIndex(index)}
-                    onMouseLeave={() => setOpenIndex(null)}
+                {/* About Dropdown */}
+                <li
+                  className={`modern-nav-item${activeDropdown === 'about' ? ' open' : ''}`}
+                  onMouseEnter={() => setActiveDropdown('about')}
+                  onMouseLeave={closeDropdowns}
+                >
+                  <button
+                    type="button"
+                    className="modern-nav-link"
+                    onClick={() => toggleDropdown('about')}
+                    aria-expanded={activeDropdown === 'about'}
                   >
-                    {item.href ? (
-                      <a className={item.active ? '' : ''} href={item.href}>
-                        {item.label}
+                    <span>About Us</span>
+                    <i className="bx bx-chevron-down dropdown-arrow" />
+                  </button>
+
+                  <ul className="modern-dropdown-menu">
+                    {ABOUT_LINKS.map((link) => (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          className="modern-dropdown-link"
+                          onClick={closeDropdowns}
+                        >
+                          <i className={link.icon} />
+                          <span>{link.label}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+
+                {/* Solutions Mega Menu */}
+                <li
+                  className={`modern-nav-item${activeDropdown === 'solutions' ? ' open' : ''}`}
+                  onMouseEnter={() => setActiveDropdown('solutions')}
+                  onMouseLeave={closeDropdowns}
+                >
+                  <button
+                    type="button"
+                    className="modern-nav-link"
+                    onClick={() => toggleDropdown('solutions')}
+                    aria-expanded={activeDropdown === 'solutions'}
+                  >
+                    <span>Solutions</span>
+                    <i className="bx bx-chevron-down dropdown-arrow" />
+                  </button>
+
+                  <div className="modern-dropdown-menu mega-solutions">
+                    {SOLUTIONS.map((item) => (
+                      <a
+                        key={item.title}
+                        href={item.href}
+                        className="modern-mega-item"
+                        onClick={closeDropdowns}
+                      >
+                        <div className="modern-mega-icon">
+                          <i className={item.icon} />
+                        </div>
+                        <div className="modern-mega-content">
+                          <span className="title">{item.title}</span>
+                          <span className="desc">{item.desc}</span>
+                        </div>
                       </a>
-                    ) : (
-                      <button type="button" className="drop-down" onClick={() => toggle(index)} aria-expanded={openIndex === index}>
-                        {item.label}
-                      </button>
-                    )}
+                    ))}
+                  </div>
+                </li>
 
-                    {item.groups || item.mega ? (
-                      <i
-                        className={`bi bi-plus dropdown-icon${openIndex === index ? ' active' : ''}`}
-                        aria-hidden="true"
-                        onClick={() => toggle(index)}
-                      />
-                    ) : null}
+                {/* Industries Dropdown */}
+                <li
+                  className={`modern-nav-item${activeDropdown === 'industries' ? ' open' : ''}`}
+                  onMouseEnter={() => setActiveDropdown('industries')}
+                  onMouseLeave={closeDropdowns}
+                >
+                  <button
+                    type="button"
+                    className="modern-nav-link"
+                    onClick={() => toggleDropdown('industries')}
+                    aria-expanded={activeDropdown === 'industries'}
+                  >
+                    <span>Industries</span>
+                    <i className="bx bx-chevron-down dropdown-arrow" />
+                  </button>
 
-                    {item.groups && !item.mega ? (
-                      <SubMenu links={item.groups[0].links} open={openIndex === index} />
-                    ) : null}
-                  </li>
-                ))}
+                  <ul className="modern-dropdown-menu">
+                    {INDUSTRIES_LIST.map((ind) => (
+                      <li key={ind.label}>
+                        <a
+                          href={ind.href}
+                          className="modern-dropdown-link"
+                          onClick={closeDropdowns}
+                        >
+                          <i className={ind.icon} />
+                          <span>{ind.label}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+
+                <li className="modern-nav-item">
+                  <a href="#why" className="modern-nav-link">
+                    Our Work
+                  </a>
+                </li>
+
+                <li className="modern-nav-item">
+                  <a href="#testimonial" className="modern-nav-link">
+                    Case Study
+                  </a>
+                </li>
               </ul>
+            </nav>
 
-              <div className="btn-and-contact-area d-lg-none d-block">
-                <Button4
-                  label="Let’s Talk"
-                  href="#contact"
-                  onClick={(event) => {
-                    setDrawerOpen(false);
-                    openContact(event);
-                  }}
-                />
-              </div>
+            {/* Right Action Area */}
+            <div className="modern-navbar-actions">
+              <a href={PHONE_HREF} className="modern-nav-phone" title="Call GrowU Digital">
+                <i className="bx bx-phone-call" />
+                <span>{PHONE}</span>
+              </a>
+
+              <button
+                type="button"
+                className="modern-nav-cta"
+                onClick={handleCtaClick}
+                aria-label="Get A Proposal"
+              >
+                <span>Get A Proposal</span>
+                <i className="bx bx-right-arrow-alt" style={{ fontSize: '18px' }} />
+              </button>
+
+              <button
+                type="button"
+                className="modern-mobile-toggle"
+                onClick={() => setDrawerOpen(true)}
+                aria-label="Open mobile navigation"
+                aria-expanded={drawerOpen}
+              >
+                <i className="bx bx-menu" />
+              </button>
             </div>
-
-            {menuItems.map((item, index) =>
-              item.mega ? (
-                <MegaMenu key={`mega-${item.label}`} item={item} open={openIndex === index} onMouseEnter={() => setOpenIndex(index)} />
-              ) : null,
-            )}
-          </div>
-
-          <div className="nav-right">
-            <div className="contact-area d-lg-flex d-none">
-              <div className="icon">
-                <img src="/assets/img/home/Contact.png" alt="" width={40} height={40} />
-              </div>
-              <div className="content">
-                <span>Our Support</span>
-                <h6>
-                  <a href={PHONE_HREF}>{PHONE}</a>
-                </h6>
-              </div>
-            </div>
-
-            <Button4 label="Let’s Talk" href="#contact" className="d-lg-flex d-none" onClick={openContact} />
-
-            <button type="button" className="sidebar-button mobile-menu-btn" onClick={() => setDrawerOpen(true)} aria-label="Open menu">
-              <Svg name="hamburger" width={20} height={18} />
-            </button>
           </div>
         </div>
       </header>
 
-      <div className={`mobile-drawer${drawerOpen ? ' open' : ''}`} aria-hidden={!drawerOpen}>
-        <div className="mobile-drawer-head">
+      {/* Mobile Drawer Overlay */}
+      <div
+        className={`modern-mobile-overlay${drawerOpen ? ' open' : ''}`}
+        onClick={() => setDrawerOpen(false)}
+        aria-hidden={!drawerOpen}
+      />
+
+      {/* Mobile Offcanvas Drawer */}
+      <aside
+        className={`modern-mobile-drawer${drawerOpen ? ' open' : ''}`}
+        aria-hidden={!drawerOpen}
+      >
+        <div className="modern-drawer-header">
           <a href="#home" onClick={() => setDrawerOpen(false)}>
-            <img src={LOGO} alt="Growu Digital" width={200} height={44} />
+            <img src={LOGO} alt="GrowU Digital" width={160} height={36} />
           </a>
-          <button type="button" onClick={() => setDrawerOpen(false)} aria-label="Close menu">
-            <i className="bi bi-x" />
+          <button
+            type="button"
+            className="modern-drawer-close"
+            onClick={() => setDrawerOpen(false)}
+            aria-label="Close menu"
+          >
+            <i className="bx bx-x" />
           </button>
         </div>
-        <ul className="mobile-menu-list">
-          {menuItems.map((item, index) => {
-            const links = item.groups?.[0].links ?? [];
-            return (
-              <li key={item.label}>
-                <div className="mobile-menu-row">
-                  {item.href ? (
-                    <a href={item.href} onClick={() => setDrawerOpen(false)}>
-                      {item.label}
-                    </a>
-                  ) : (
-                    <button type="button" onClick={() => setMobileExpanded(mobileExpanded === index ? null : index)}>
-                      {item.label}
-                    </button>
-                  )}
-                  {links.length ? (
-                    <button
-                      type="button"
-                      className={`mobile-caret${mobileExpanded === index ? ' open' : ''}`}
-                      onClick={() => setMobileExpanded(mobileExpanded === index ? null : index)}
-                      aria-label={`Toggle ${item.label}`}
-                    >
-                      <i className="bi bi-plus" />
-                    </button>
-                  ) : null}
-                </div>
-                {links.length && mobileExpanded === index ? (
-                  <div className="mobile-submenu">
-                    <ul>
-                      {links.map((link) => (
-                        <li key={link.label} className={link.box === 'bx bx-right-arrow-alt' ? 'all-btn' : 'hover-move'}>
-                          <a href={link.href} onClick={() => setDrawerOpen(false)}>
-                            {link.box ? <i className={link.box} /> : null}
-                            {link.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-              </li>
-            );
-          })}
-        </ul>
-        <div className="mobile-drawer-foot">
-          <a href={PHONE_HREF}>{PHONE}</a>
-          <Button1 label="Let’s Talk" href="#contact" />
-        </div>
-      </div>
-      {drawerOpen ? <div className="drawer-backdrop" onClick={() => setDrawerOpen(false)} /> : null}
-    </>
-  );
-}
 
-/* ------------------------------------------------------------------ */
-/* Desktop sub menu                                                    */
-/* ------------------------------------------------------------------ */
-
-function SubMenu({ links, open }: { links: MenuGroup['links']; open: boolean }) {
-  return (
-    <ul className={`sub-menu${open ? ' show' : ''}`}>
-      {links.map((link) => {
-        const isAll = link.box === 'bx bx-right-arrow-alt';
-        return (
-          <li key={link.label} className={isAll ? 'hover-move' : 'service-list hover-move'}>
-            <a className={isAll ? 'all-btn' : ''} href={link.href}>
-              {link.box ? <i className={link.box} /> : null}
-              {link.label}
-            </a>
+        <ul className="modern-mobile-nav-list">
+          <li className="modern-mobile-nav-item">
+            <div className="modern-mobile-row">
+              <a href="#home" onClick={() => setDrawerOpen(false)}>
+                Home
+              </a>
+            </div>
           </li>
-        );
-      })}
-    </ul>
-  );
-}
 
-/* ------------------------------------------------------------------ */
-/* Mega menus (rendered at header level so they centre on the page)    */
-/* ------------------------------------------------------------------ */
-
-function MegaMenu({ item, open, onMouseEnter }: { item: MenuItem; open: boolean; onMouseEnter: () => void }) {
-  const blog = item.blog;
-
-  return (
-    <div className={`mega-menu2${blog ? ' two' : ''}${open ? ' show' : ''}`} onMouseEnter={onMouseEnter}>
-      <div className="container">
-        <div className="row align-items-lg-end justify-content-between">
-          {blog ? (
-            <>
-              <div className="col-xl-6 col-lg-7 d-lg-block d-none">
-                <div className="title-area">
-                  <h2>{blog.title}</h2>
-                  <div className="icon">
-                    <Svg name="arrowRight" width={10} height={10} />
-                  </div>
-                </div>
-                <div className="row">
-                  {blog.cards.map((card) => (
-                    <div className="col-lg-6" key={card.title}>
-                      <div className="menu-blog-card">
-                        <a className="blog-img" href={card.href}>
-                          <img src={card.img} alt="" width={456} height={350} />
-                        </a>
-                        <div className="blog-content">
-                          <ul className="blog-meta">
-                            <li>
-                              <a href={card.href}>{card.tag}</a>
-                            </li>
-                            <li className="blog-date">
-                              <a href={card.href}>
-                                <Svg name="blogMeta" width={8} height={8} /> {card.date}
-                              </a>
-                            </li>
-                          </ul>
-                          <h5>
-                            <a href={card.href}>{card.title}</a>
-                          </h5>
-                          <a className="read-more-btn" href={card.href}>
-                            Read More <Svg name="arrowRight" width={10} height={10} />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="col-lg-4">
-                <ul className="menu-row">
-                  <li className="menu-single-item">
-                    <div className="menu-title">
-                      <h6>
-                        <Svg name="menuTitleMark" width={17} height={12} /> Innovative Case
-                      </h6>
-                    </div>
-                    <ul>
-                      <li className="hover-move">
-                        <a href={blog.caseLink.href}>
-                          <span>
-                            <Svg name="arrowRight" width={10} height={10} /> {blog.caseLink.label}
-                          </span>
-                          <div className="arrow">
-                            <Svg name="menuArrow" width={7} height={9} />
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
+          {/* About Mobile */}
+          <li className="modern-mobile-nav-item">
+            <div className="modern-mobile-row">
+              <button
+                type="button"
+                onClick={() =>
+                  setMobileExpanded(mobileExpanded === 'about' ? null : 'about')
+                }
+              >
+                About Us
+              </button>
+              <i
+                className={`bx ${
+                  mobileExpanded === 'about' ? 'bx-chevron-up' : 'bx-chevron-down'
+                }`}
+              />
+            </div>
+            {mobileExpanded === 'about' && (
+              <ul className="modern-mobile-sublist">
+                {ABOUT_LINKS.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} onClick={() => setDrawerOpen(false)}>
+                      {link.label}
+                    </a>
                   </li>
-                </ul>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="col-xl-7 col-lg-9">
-                <div className="title-area">
-                  <h2>Challenge We Tackle</h2>
-                  <div className="icon">
-                    <Svg name="arrowRight" width={10} height={10} />
-                  </div>
-                </div>
-                <ul className="menu-row">
-                  {item.groups?.map((group) => (
-                    <li key={group.title} className={`menu-single-item${group.width ? ` ${group.width}` : ''}`}>
-                      <div className="menu-title">
-                        <h6>
-                          <Svg name="menuTitleMark" width={17} height={12} /> {group.title}
-                        </h6>
-                      </div>
-                      <ul>
-                        {group.links.map((link) => (
-                          <li key={link.label} className={link.icon ? 'hover-move' : 'hover-move'}>
-                            <a href={link.href} className={link.label === 'View All Services' ? 'all-btn' : ''}>
-                              {link.icon ? <Svg name={link.icon} width={22} height={22} /> : null}
-                              {link.label}
-                              {link.label === 'View All Services' ? <Svg name="arrowRight" width={10} height={10} /> : null}
-                            </a>
-                          </li>
-                        ))}
-                        {group.nested ? (
-                          <>
-                            <li>
-                              <div className="menu-title">
-                                <h6>
-                                  <Svg name="menuTitleMark" width={17} height={12} /> {group.nested.title}
-                                </h6>
-                              </div>
-                            </li>
-                            {group.nested.links.map((link) => (
-                              <li key={link.label} className="hover-move">
-                                <a href={link.href}>
-                                  {link.box ? <i className={link.box} /> : null} {link.label}
-                                </a>
-                              </li>
-                            ))}
-                          </>
-                        ) : null}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                ))}
+              </ul>
+            )}
+          </li>
 
-              {item.banner ? (
-                <div className="col-lg-3">
-                  <div className="solution-menu-banner">
-                    <div className="banner-content">
-                      <h4>{item.banner.text}</h4>
-                      <Button1 label={item.banner.cta} href={item.banner.href} />
-                    </div>
-                    <div className="banner-img">
-                      <img src={item.banner.img} alt="" width={320} height={220} />
-                    </div>
-                  </div>
-                </div>
-              ) : null}
-            </>
-          )}
+          {/* Solutions Mobile */}
+          <li className="modern-mobile-nav-item">
+            <div className="modern-mobile-row">
+              <button
+                type="button"
+                onClick={() =>
+                  setMobileExpanded(mobileExpanded === 'solutions' ? null : 'solutions')
+                }
+              >
+                Solutions
+              </button>
+              <i
+                className={`bx ${
+                  mobileExpanded === 'solutions' ? 'bx-chevron-up' : 'bx-chevron-down'
+                }`}
+              />
+            </div>
+            {mobileExpanded === 'solutions' && (
+              <ul className="modern-mobile-sublist">
+                {SOLUTIONS.map((item) => (
+                  <li key={item.title}>
+                    <a href={item.href} onClick={() => setDrawerOpen(false)}>
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          {/* Industries Mobile */}
+          <li className="modern-mobile-nav-item">
+            <div className="modern-mobile-row">
+              <button
+                type="button"
+                onClick={() =>
+                  setMobileExpanded(mobileExpanded === 'industries' ? null : 'industries')
+                }
+              >
+                Industries
+              </button>
+              <i
+                className={`bx ${
+                  mobileExpanded === 'industries' ? 'bx-chevron-up' : 'bx-chevron-down'
+                }`}
+              />
+            </div>
+            {mobileExpanded === 'industries' && (
+              <ul className="modern-mobile-sublist">
+                {INDUSTRIES_LIST.map((ind) => (
+                  <li key={ind.label}>
+                    <a href={ind.href} onClick={() => setDrawerOpen(false)}>
+                      {ind.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          <li className="modern-mobile-nav-item">
+            <div className="modern-mobile-row">
+              <a href="#why" onClick={() => setDrawerOpen(false)}>
+                Our Work
+              </a>
+            </div>
+          </li>
+
+          <li className="modern-mobile-nav-item">
+            <div className="modern-mobile-row">
+              <a href="#testimonial" onClick={() => setDrawerOpen(false)}>
+                Case Study
+              </a>
+            </div>
+          </li>
+        </ul>
+
+        <div className="modern-drawer-contact-card">
+          <a href={PHONE_HREF}>
+            <i className="bx bx-phone" />
+            <span>{PHONE}</span>
+          </a>
+          <a href={EMAIL_HREF}>
+            <i className="bx bx-envelope" />
+            <span>{EMAIL}</span>
+          </a>
+          <button
+            type="button"
+            className="modern-nav-cta w-100 mt-3 justify-content-center"
+            onClick={handleCtaClick}
+          >
+            <span>Get A Proposal</span>
+            <i className="bx bx-right-arrow-alt" />
+          </button>
         </div>
-      </div>
-    </div>
+      </aside>
+    </>
   );
 }

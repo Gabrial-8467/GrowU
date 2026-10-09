@@ -32,13 +32,7 @@ export default function App() {
       <Navbar onContact={openModal} />
       <main>
         <Hero onProposal={openModal} />
-        <PartnerMarquee
-          heading={
-            <>
-              Certified <span className="sub-title">Expertise</span> Across All Leading Platforms
-            </>
-          }
-        />
+        <PartnerMarquee heading="CERTIFIED EXPERTISE ACROSS ALL LEADING PLATFORMS" />
         <About />
         <Services />
         <WhyGrowu />

@@ -1,20 +1,4 @@
-/* Icon subset: woff2 only, glyphs used by this page. */
-
-@font-face {
-  font-family: 'boxicons';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(/assets/fonts/boxicons.woff2) format('woff2');
-}
-
-@font-face {
-  font-family: 'bootstrap-icons';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(/assets/fonts/bootstrap-icons.woff2) format('woff2');
-}
+/* Custom icon font rules and legacy helpers */
 
 
 .bx-cart:before { content:"\ea36" }
